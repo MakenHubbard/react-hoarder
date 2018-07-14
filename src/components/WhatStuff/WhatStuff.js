@@ -2,29 +2,45 @@ import React from 'react';
 
 import AllStuffRequests from '../../firebaseRequests/allStuff';
 import AllStuff from '../AllStuff/AllStuff';
+import authRequest from '../../firebaseRequests/auth';
+import newStuffRequest from '../../firebaseRequests/newStuff';
 
-import './Inventory.css';
+import './WhatStuff.css';
 
 class WhatStuff extends React.Component {
   state = {
     stuffs: [],
   }
 
+  addToMyStuff = (details) => {
+    details.uid = authRequest.getUid();
+    newStuffRequest
+      .postRequest(details)
+      .then(() => {
+        this.props.history.push('/mystuff');
+      })
+      .catch((err) => {
+        console.error('error in order post', err);
+      });
+  };
+
   componentDidMount () {
     AllStuffRequests
       .getRequest()
       .then((stuffs) => {
-        this.setState({stuffs: stuffs});
+        this.setState({ stuffs });
       })
       .catch((err) => {
         console.error('error with all stuff get request inside of what stuff', err);
       });
   }
   render () {
-    const allStuffCompnonents = this.state.stuffs.map((stuff) => {
+    const allStuffComponents = this.state.stuffs.map((stuff) => {
       return (
         <AllStuff
           key={stuff.id}
+          details={stuff}
+          addToMyStuff = {this.addToMyStuff}
         />
       );
     });
@@ -33,7 +49,7 @@ class WhatStuff extends React.Component {
       <div className="WhatStuff col-xs-12">
         <h1>WhatStuff</h1>
         <ul className="stuffs">
-          {allStuffCompnonents}
+          {allStuffComponents}
         </ul>
       </div>
     );

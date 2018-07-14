@@ -1,51 +1,53 @@
 import React, { Component } from 'react';
-import { Route, BrowserRouter, Redirect, Switch } from 'react-router-dom';
+// import { Route, BrowserRouter, Redirect, Switch } from 'react-router-dom';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import firebase from 'firebase';
 
 import './App.css';
 
-import Login from '../components/Login/Login';
-import Navbar from '../components/Navbar/Navbar';
-import AllStuff from '../components/AllStuff/AllStuff';
+// import Login from '../components/Login/Login';
+// import Navbar from '../components/Navbar/Navbar';
+// import AllStuff from '../components/AllStuff/AllStuff';
 import MyStuff from '../components/MyStuff/MyStuff';
-import Register from '../components/Register/Register';
+// import WhatStuff from '../components/WhatStuff/WhatStuff';
+// import Register from '../components/Register/Register';
 
 import fbConnection from '../firebaseRequests/connection';
 fbConnection();
 
-const PrivateRoute = ({ component: Component, authed, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        authed === true ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{ pathname: '/login', state: { from: props.location } }}
-          />
-        )
-      }
-    />
-  );
-};
+// const PrivateRoute = ({ component: Component, authed, ...rest }) => {
+//   return (
+//     <Route
+//       {...rest}
+//       render={props =>
+//         authed === true ? (
+//           <Component {...props} />
+//         ) : (
+//           <Redirect
+//             to={{ pathname: '/allstuff', state: { from: props.location } }}
+//           />
+//         )
+//       }
+//     />
+//   );
+// };
 
-const PublicRoute = ({ component: Component, authed, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        authed === false ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{ pathname: '/login', state: { from: props.location } }}
-          />
-        )
-      }
-    />
-  );
-};
+// const PublicRoute = ({ component: Component, authed, ...rest }) => {
+//   return (
+//     <Route
+//       {...rest}
+//       render={props =>
+//         authed === false ? (
+//           <Component {...props} />
+//         ) : (
+//           <Redirect
+//             to={{ pathname: '/login ', state: { from: props.location } }}
+//           />
+//         )
+//       }
+//     />
+//   );
+// };
 
 class App extends Component {
   state = {
@@ -74,14 +76,19 @@ class App extends Component {
       <div className="App">
         <BrowserRouter>
           <div>
-            <Navbar
+            {/* <Navbar
               authed={this.state.authed}
               runAway={this.runAway}
-            />
+            /> */}
             <div className="container">
               <div className="row">
                 <Switch>
                   <Route path="/" exact component={MyStuff} />
+                  {/* <PrivateRoute
+                    path="/whatstuff"
+                    authed={this.state.authed}
+                    component={WhatStuff}
+                  />
                   <PrivateRoute
                     path="/mystuff"
                     authed={this.state.authed}
@@ -100,8 +107,8 @@ class App extends Component {
                   <PrivateRoute
                     path="/allstuff"
                     authed={this.state.authed}
-                    component={AllStuff}
-                  />
+                    component={WhatStuff}
+                  /> */}
                 </Switch>
               </div>
             </div>

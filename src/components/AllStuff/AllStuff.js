@@ -5,19 +5,21 @@ import './AllStuff.css';
 class AllStuff extends React.Component {
 
   addClickEvent = () => {
-    this.props.addToMyStuff(this.props.details.id);
+    console.error('click event',this.props);
+    // this.props.addToMyStuff(this.props.details);
   }
 
   render () {
-    const { stuff } = this.props;
-    const image = require(`${stuff.itemImage}`);
+    const { details } = this.props;
+    const image = details.itemImage;
+
     return (
       <li className="AllStuff">
-        <img src={image} alt={stuff.itemName} />
+        <img src={image} alt={details.itemName} />
         <h3 className="itemName">
-          {stuff.itemName}
+          {details.itemName}
         </h3>
-        <p>{stuff.itemDescription}</p>
+        <p>{details.itemDescription}</p>
         <button
           onClick={this.addClickEvent}
         >Add to My Stuff
